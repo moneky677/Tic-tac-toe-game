@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            Tic Tac Toe Game
+        </title>
+        <style>
+            body{
+                min-height: 100vh;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                margin: 0;
+                background-color: turquoise;
+            }
+            .main{
+                border: #008B8B solid 5px;
+                height: 390px;
+                width: 390px;
+                display: flex;
+                align-items: start;
+                flex-wrap: wrap;
+            }
+            .main button{
+                border: #008B8B solid 5px;
+                box-sizing: border-box;
+                min-width: 130px;
+                min-height: 130px;
+                background-color: #3AB09E;
+                text-align: center;
+                font-size: 6em;
+            }
+            .main button:hover{
+                border: #008B8B solid 7px;
+                animation: rainbow 1s linear infinite;
+            }
+            .main button:active{
+                animation: grow 0.5s ease-in-out 1;
+            }
+            @keyframes rainbow{
+                16.667%{background-color: #FF0800;}
+                33.32%{background-color: #FF4F00;}
+                49.98%{background-color: #FFBF00;}
+                66.64%{background-color: #FFBF00;}
+                83.3%{background-color: #00B9E8;}
+                100%{background-color: #9966CC}
+            }
+            .player1{
+                font-size: 1.5em;
+                color: #0000B8;
+                box-sizing: border-box;
+            }
+            .player1 p:hover{
+                border-bottom: 2px #99FFFF solid;
+            }
+            .player2{
+                font-size: 1.5em;
+                color: #0000B8;
+            }
+            .player2 p:hover{
+                border-bottom: 2px #99FFFF solid;
+            }
+            @keyframes grow{
+                50%{
+                    transform: scale(2);
+                }
+                60%{
+                    transform: scale(-2);
+                }
+                70%{
+                    transform: scale(2);
+                }
+                80%{
+                    transform: scale(-2);
+                }
+                90%{
+                    transform: scale(2);
+                }
+                100%{
+                    transform: scale(-2);
+                }
+            }
+            .reset button{
+                width: 110px;
+                height: 50px;
+                padding: 5px 10px;
+                border-radius: 65px;
+                font-size: larger;
+                background-color: #008B8B;
+                color: white;
+                border: #b00b69 solid 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <button id="box1"></button>
+            <button id="box2"></button>
+            <button id="box3"></button>
+            <button id="box4"></button>
+            <button id="box5"></button>
+            <button id="box6"></button>
+            <button id="box7"></button>
+            <button id="box8"></button>
+            <button id="box9"></button>
+        </div>
+        <br>
+        <br>
+        <div class="player1">
+            <p id="player1score">Player1 score: 0</p>
+        </div>
+        <br>
+        <div class="player2">
+            <p id="player2score">Player2 score: 0</p>
+        </div>
+        <br>
+        <br>
+        <div class="reset">
+            <button id="reset">Reset All</button>
+        </div>
+        <script>
+            let playerturn = "player1", playerinput = playerturn === "player1" ? "X" : "O";
+            let score1 = 0, score2 = 0;
+            function win(){
+                const a1 = document.getElementById("box1").textContent;
+                const a2 = document.getElementById("box2").textContent;
+                const a3 = document.getElementById("box3").textContent;
+                const b1 = document.getElementById("box4").textContent;
+                const b2 = document.getElementById("box5").textContent;
+                const b3 = document.getElementById("box6").textContent;
+                const c1 = document.getElementById("box7").textContent;
+                const c2 = document.getElementById("box8").textContent;
+                const c3 = document.getElementById("box9").textContent;
+                if ((a1 === "X" && a2 === "X" && a3 === "X") || (b1 === "X" && b2 === "X" && b3 === "X") || (c1 === "X" && c2 === "X" && c3 === "X") || (a1 === "X" && b1 === "X" && c1 === "X") || (a2 === "X" && b2 === "X" && c2 === "X") || (a3 === "X" && b3 === "X" && c3 === "X") || (a1 === "X" && b2 === "X" && c3 === "X") || (a3 === "X" && b2 === "X" && c1 === "X")) {
+                    score1 += 1;
+                    document.getElementById("player1score").textContent = `Player1 score: ${score1}`;
+                    setTimeout(reset, 3000)
+                }
+                else if ((a1 === "O" && a2 === "O" && a3 === "O") || (b1 === "O" && b2 === "O" && b3 === "O") || (c1 === "O" && c2 === "O" && c3 === "O") || (a1 === "O" && b1 === "O" && c1 === "O") || (a2 === "O" && b2 === "O" && c2 === "O") || (a3 === "O" && b3 === "O" && c3 === "O") || (a1 === "O" && b2 === "O" && c3 === "O") || (a3 === "O" && b2 === "O" && c1 === "O")) {
+                    score2 += 1;
+                    document.getElementById("player2score").textContent = `Player2 score: ${score2}`;
+                    setTimeout(reset, 3000)
+                }
+            }
+            document.getElementById("box1").onclick = () => {
+                if (document.getElementById("box1").textContent !== "") { return; }
+                document.getElementById("box1").textContent = playerinput;
+                if (playerturn === "player1"){playerturn = "player2"; playerinput = "O"}
+                else if (playerturn === "player2"){playerturn = "player1"; playerinput = "X"}
+                win();
+            }
+            document.getElementById("box2").onclick = () => {
+                if (document.getElementById("box2").textContent !== "") { return; }
+                document.getElementById("box2").textContent = playerinput;
+                if (playerturn === "player1"){playerturn = "player2"; playerinput = "O"}
+                else if (playerturn === "player2"){playerturn = "player1"; playerinput = "X"}
+                win();
+            }
+            document.getElementById("box3").onclick = () => {
+                if (document.getElementById("box3").textContent !== "") { return; }
+                document.getElementById("box3").textContent = playerinput;
+                if (playerturn === "player1"){playerturn = "player2"; playerinput = "O"}
+                else if (playerturn === "player2"){playerturn = "player1"; playerinput = "X"}
+                win();
+            }
+            document.getElementById("box4").onclick = () => {
+                if (document.getElementById("box4").textContent !== "") { return; }
+                document.getElementById("box4").textContent = playerinput;
+                if (playerturn === "player1"){playerturn = "player2"; playerinput = "O"}
+                else if (playerturn === "player2"){playerturn = "player1"; playerinput = "X"}
+                win();
+            }
+            document.getElementById("box5").onclick = () => {
+                if (document.getElementById("box5").textContent !== "") { return; }
+                document.getElementById("box5").textContent = playerinput;
+                if (playerturn === "player1"){playerturn = "player2"; playerinput = "O"}
+                else if (playerturn === "player2"){playerturn = "player1"; playerinput = "X"}
+                win();
+            }
+            document.getElementById("box6").onclick = () => {
+                if (document.getElementById("box6").textContent !== "") { return; }
+                document.getElementById("box6").textContent = playerinput;
+                if (playerturn === "player1"){playerturn = "player2"; playerinput = "O"}
+                else if (playerturn === "player2"){playerturn = "player1"; playerinput = "X"}
+                win();
+            }
+            document.getElementById("box7").onclick = () => {
+                if (document.getElementById("box7").textContent !== "") { return; }
+                document.getElementById("box7").textContent = playerinput;
+                if (playerturn === "player1"){playerturn = "player2"; playerinput = "O"}
+                else if (playerturn === "player2"){playerturn = "player1"; playerinput = "X"}
+                win();
+            }
+            document.getElementById("box8").onclick = () => {
+                if (document.getElementById("box8").textContent !== "") { return; }
+                document.getElementById("box8").textContent = playerinput;
+                if (playerturn === "player1"){playerturn = "player2"; playerinput = "O"}
+                else if (playerturn === "player2"){playerturn = "player1"; playerinput = "X"}
+                win();
+            }
+            document.getElementById("box9").onclick = () => {
+                if (document.getElementById("box9").textContent !== "") { return; }
+                document.getElementById("box9").textContent = playerinput;
+                if (playerturn === "player1"){playerturn = "player2"; playerinput = "O"}
+                else if (playerturn === "player2"){playerturn = "player1"; playerinput = "X"}
+                win();
+            }
+            function reset(){
+                document.getElementById("box1").textContent = "";
+                document.getElementById("box2").textContent = "";
+                document.getElementById("box3").textContent = "";
+                document.getElementById("box4").textContent = "";
+                document.getElementById("box5").textContent = "";
+                document.getElementById("box6").textContent = "";
+                document.getElementById("box7").textContent = "";
+                document.getElementById("box8").textContent = "";
+                document.getElementById("box9").textContent = "";
+                document.getElementById("player1score").textContent = "Player1 score: 0";
+                document.getElementById("player2score").textContent = "Player2 score: 0";
+                playerturn = "player1";
+                playerinput = "X";
+            }
+            document.getElementById("reset").onclick = reset;
+        </script>
+    </body>
+</html>
