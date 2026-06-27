@@ -138,12 +138,12 @@
                 if ((a1 === "X" && a2 === "X" && a3 === "X") || (b1 === "X" && b2 === "X" && b3 === "X") || (c1 === "X" && c2 === "X" && c3 === "X") || (a1 === "X" && b1 === "X" && c1 === "X") || (a2 === "X" && b2 === "X" && c2 === "X") || (a3 === "X" && b3 === "X" && c3 === "X") || (a1 === "X" && b2 === "X" && c3 === "X") || (a3 === "X" && b2 === "X" && c1 === "X")) {
                     score1 += 1;
                     document.getElementById("player1score").textContent = `Player1 score: ${score1}`;
-                    setTimeout(reset, 3000)
+                    setTimeout(resetgame, 1500)
                 }
                 else if ((a1 === "O" && a2 === "O" && a3 === "O") || (b1 === "O" && b2 === "O" && b3 === "O") || (c1 === "O" && c2 === "O" && c3 === "O") || (a1 === "O" && b1 === "O" && c1 === "O") || (a2 === "O" && b2 === "O" && c2 === "O") || (a3 === "O" && b3 === "O" && c3 === "O") || (a1 === "O" && b2 === "O" && c3 === "O") || (a3 === "O" && b2 === "O" && c1 === "O")) {
                     score2 += 1;
                     document.getElementById("player2score").textContent = `Player2 score: ${score2}`;
-                    setTimeout(reset, 3000)
+                    setTimeout(resetgame, 1500)
                 }
             }
             document.getElementById("box1").onclick = () => {
@@ -209,7 +209,20 @@
                 else if (playerturn === "player2"){playerturn = "player1"; playerinput = "X"}
                 win();
             }
-            function reset(){
+            function resetgame(){
+                document.getElementById("box1").textContent = "";
+                document.getElementById("box2").textContent = "";
+                document.getElementById("box3").textContent = "";
+                document.getElementById("box4").textContent = "";
+                document.getElementById("box5").textContent = "";
+                document.getElementById("box6").textContent = "";
+                document.getElementById("box7").textContent = "";
+                document.getElementById("box8").textContent = "";
+                document.getElementById("box9").textContent = "";
+                playerturn = "player1";
+                playerinput = "X";
+            }
+            function resetall(){
                 document.getElementById("box1").textContent = "";
                 document.getElementById("box2").textContent = "";
                 document.getElementById("box3").textContent = "";
@@ -224,7 +237,7 @@
                 playerturn = "player1";
                 playerinput = "X";
             }
-            document.getElementById("reset").onclick = reset;
+            document.getElementById("reset").onclick = resetall;
         </script>
     </body>
 </html>
